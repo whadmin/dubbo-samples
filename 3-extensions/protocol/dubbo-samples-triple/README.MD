@@ -1,51 +1,49 @@
-## Triple-Samples
+whadmin: 翻译成中文
 
-[Triple](https://dubbo.apache.org/zh/docs/concepts/rpc-protocol/) is an application layer's protocol based on HTTP/2,
-which supports interoperating with GRPC protocol naturally using Protobuf serialization. For non-protobuf applications,
-triple provides a compatible mode to upgrade without code modifications. So it is smooth to migrate to triple.
+GitHub Copilot: # Triple-示例
 
-This sample project contains most scenarios of Dubbo and non-Dubbo interoperation.
+[Triple](https://dubbo.apache.org/zh/docs/concepts/rpc-protocol/)是一个基于HTTP/2的应用层协议，它使用Protobuf序列化自然地支持与GRPC协议的互操作。对于非protobuf应用，triple提供了一种兼容模式，可以在不修改代码的情况下进行升级。因此迁移到triple是非常平滑的。
 
-## Before Start
+这个示例项目包含了Dubbo和非Dubbo互操作的大多数场景。
 
-Generate protobuf class for IDE hints.
+## 开始之前
+
+为IDE提示生成protobuf类。
 
 ```shell
 mvn clean -DskipTests=true
 ```
 
-### For beginners
+### 对于初学者
 
-1. Start a zookeeper or config other registry in `org.apache.dubbo.sample.tri.stub.TriStubServer`
-   and `org.apache.dubbo.sample.tri.stub.TriStubClient`
-2. Build with `mvn clean install` to generate protobuf classes.
-3. Run `org.apache.dubbo.sample.tri.stub.TriStubServer`
-4. Run `org.apache.dubbo.sample.tri.stub.TriStubClient`
+1. 启动zookeeper或在`org.apache.dubbo.sample.tri.stub.TriStubServer`和`org.apache.dubbo.sample.tri.stub.TriStubClient`中配置其他注册中心
+2. 使用`mvn clean install`构建以生成protobuf类
+3. 运行`org.apache.dubbo.sample.tri.stub.TriStubServer`
+4. 运行`org.apache.dubbo.sample.tri.stub.TriStubClient`
 
-### For dubbo2 or non-prototbuf users
+### 对于dubbo2或非protobuf用户
 
-Run `org.apache.dubbo.sample.tri.pojo.TriPojoServer` and `org.apache.dubbo.sample.tri.pojo.TriPojoClient`.
+运行`org.apache.dubbo.sample.tri.pojo.TriPojoServer`和`org.apache.dubbo.sample.tri.pojo.TriPojoClient`。
 
-Dubbo3 will wrap request and response with a protobuf wrapper automatically, so it is still compatible with GRPC.
+Dubbo3将自动使用protobuf包装器包装请求和响应，因此它仍然与GRPC兼容。
 
-### For Dubbo developers
+### 对于Dubbo开发者
 
-Code under `test` folder is a general interoperation test suite for both Dubbo/Dubbo and Dubbo/GRPC.
+test文件夹下的代码是Dubbo/Dubbo和Dubbo/GRPC的通用互操作测试套件。
 
-#### Dubbo/Dubbo test
+#### Dubbo/Dubbo测试
 
-1. Run `org.apache.dubbo.sample.tri.TriGrpcProvider`
-2. Run `org.apache.dubbo.sample.tri.TriClientTest` , `org.apache.dubbo.sample.tri.TriPojoClientTest`
-   and `org.apache.dubbo.sample.tri.TriGenericTest`
+1. 运行`org.apache.dubbo.sample.tri.TriGrpcProvider`
+2. 运行`org.apache.dubbo.sample.tri.TriClientTest`、`org.apache.dubbo.sample.tri.TriPojoClientTest`和`org.apache.dubbo.sample.tri.TriGenericTest`
 
-#### Dubbo/GRPC test
+#### Dubbo/GRPC测试
 
 ##### GRPC --> Dubbo
 
-1. Run `org.apache.dubbo.sample.tri.TriGrpcProvider`
-2. Run `org.apache.dubbo.sample.tri.grpc.GrpcClientTest`
+1. 运行`org.apache.dubbo.sample.tri.TriGrpcProvider`
+2. 运行`org.apache.dubbo.sample.tri.grpc.GrpcClientTest`
 
 ##### Dubbo --> GRPC
 
-1. Run `org.apache.dubbo.sample.tri.grpc.GrpcServer`
-2. Run `org.apache.dubbo.sample.tri.TriClientTest`
+1. 运行`org.apache.dubbo.sample.tri.grpc.GrpcServer`
+2. 运行`org.apache.dubbo.sample.tri.TriClientTest`
