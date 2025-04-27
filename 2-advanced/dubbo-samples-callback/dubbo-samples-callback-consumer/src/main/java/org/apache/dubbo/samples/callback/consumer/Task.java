@@ -21,6 +21,8 @@ package org.apache.dubbo.samples.callback.consumer;
 
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.apache.dubbo.samples.callback.api.CallbackService;
+import org.apache.dubbo.samples.callback.api.StockPriceListener;
+import org.apache.dubbo.samples.callback.api.StockService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -30,10 +32,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class Task implements CommandLineRunner {
-    
+
     // 引用远程回调服务
     @DubboReference
-    private CallbackService callbackService;
+    private StockService stockService;
+    ;
 
     /**
      * 应用启动后执行
@@ -41,8 +44,11 @@ public class Task implements CommandLineRunner {
      */
     @Override
     public void run(String... args) throws Exception {
-        // 注册两个不同ID的回调监听器
-        callbackService.addListener("foo.bar", new CallbackListenerImpl("1"));
-        callbackService.addListener("foo.bar2", new CallbackListenerImpl("2"));
+        // 创建监听器实例
+        StockPriceListener listener = new StockPriceListenerImpl("client001");
+
+        // 订阅股票价格变动
+        stockService.subscribePrice("AAPL", listener);
+        stockService.subscribePrice("GOOGL", listener);
     }
 }
