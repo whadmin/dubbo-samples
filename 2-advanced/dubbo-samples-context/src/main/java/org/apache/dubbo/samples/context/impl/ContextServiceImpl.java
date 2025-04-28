@@ -126,8 +126,6 @@ public class ContextServiceImpl implements ContextService {
     public CompletableFuture<String> getInfoAsync(String request) {
         return CompletableFuture.supplyAsync(() -> {
             try {
-                // 线程切换后，需要重新处理上下文信息
-                
                 // 获取主线程传递过来的附件
                 String traceId = RpcContext.getServerAttachment().getAttachment("traceId");
                 String asyncMarker = RpcContext.getServerAttachment().getAttachment("asyncMarker");
@@ -138,10 +136,6 @@ public class ContextServiceImpl implements ContextService {
                 response.append("TraceId from original request: ").append(traceId != null ? traceId : "Not provided").append("\n");
                 response.append("Async Marker: ").append(asyncMarker != null ? asyncMarker : "Not provided").append("\n");
                 response.append("Processing Time: ").append(System.currentTimeMillis()).append("\n");
-                
-                // 异步处理中模拟耗时操作
-                Thread.sleep(100);
-                
                 return response.toString();
             } catch (Exception e) {
                 return "Async processing failed: " + e.getMessage();

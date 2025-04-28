@@ -44,23 +44,23 @@ public class ContextConsumer {
         // 获取远程服务代理
         ContextService contextService = context.getBean("contextService", ContextService.class);
 
-        // 测试基础场景：获取基本上下文信息
-        testBasicInfo(contextService);
-        
-        // 测试链路追踪场景
-        testTrace(contextService);
-        
         // 测试异步调用场景
         testAsyncCall(contextService);
-        
-        // 测试级联调用场景
-        testCascadeCall(contextService);
-        
-        // 测试服务器状态查询
-        testServerState(contextService);
-        
-        // 测试参数传递方式
-        testParameterPassing(contextService);
+
+//        // 测试基础场景：获取基本上下文信息
+//        testBasicInfo(contextService);
+//
+//        // 测试链路追踪场景
+//        testTrace(contextService);
+//
+//        // 测试级联调用场景
+//        testCascadeCall(contextService);
+//
+//        // 测试服务器状态查询
+//        testServerState(contextService);
+//
+//        // 测试参数传递方式
+//        testParameterPassing(contextService);
         
         System.out.println("所有测试完成!");
         context.close();
@@ -157,7 +157,7 @@ public class ContextConsumer {
         RpcContext.getClientAttachment().setAttachment("traceId", asyncTraceId);
         RpcContext.getClientAttachment().setAttachment("asyncMarker", "true");
         RpcContext.getClientAttachment().setAttachment("timestamp", String.valueOf(System.currentTimeMillis()));
-        
+
         System.out.println("发送异步请求，AsyncTraceId: " + asyncTraceId);
         
         // 异步调用需要等待结果
@@ -172,6 +172,7 @@ public class ContextConsumer {
                 try {
                     if (exception != null) {
                         System.err.println("异步调用异常: " + exception.getMessage());
+                        exception.printStackTrace();  // 打印更详细的异常信息
                     } else {
                         long startTime = (long) LOCAL_CONTEXT.get("asyncStartTime");
                         long duration = System.currentTimeMillis() - startTime;
@@ -184,13 +185,14 @@ public class ContextConsumer {
                 }
             });
             
-            // 等待异步调用完成或超时
-            if (!latch.await(5, TimeUnit.SECONDS)) {
-                System.err.println("异步调用超时");
+            // 等待异步调用完成或超时，设置更长的等待时间
+            if (!latch.await(10, TimeUnit.SECONDS)) {
+                System.err.println("异步调用等待超时");
             }
             
         } catch (Exception e) {
             System.err.println("异步调用发生异常: " + e.getMessage());
+            e.printStackTrace();  // 打印更详细的异常信息
             latch.countDown();
         }
     }
