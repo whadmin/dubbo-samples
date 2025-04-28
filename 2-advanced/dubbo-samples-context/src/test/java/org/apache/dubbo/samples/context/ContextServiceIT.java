@@ -18,7 +18,6 @@
 package org.apache.dubbo.samples.context;
 
 import org.apache.dubbo.samples.context.api.ContextService;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,16 +28,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath*:/spring/dubbo-context-consumer.xml"})
 public class ContextServiceIT {
-
     @Autowired
     private ContextService contextService;
 
     @Test
     public void test() throws Exception {
+        // 测试RPC调用和上下文传递
         String result = contextService.sayHello("dubbo");
+        // 验证结果中包含预期的上下文信息
         Assert.assertTrue(result.startsWith("Hello dubbo, response from"));
         Assert.assertTrue(result.contains("isProviderSide: true"));
         Assert.assertTrue(result.contains("local: context-"));
-//        Assert.assertTrue(result.contains("remote: context-consumer"));
     }
 }

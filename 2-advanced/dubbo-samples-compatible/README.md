@@ -1,7 +1,6 @@
-## dubbo-samples-compatible
+dubbo-samples-compatible 兼容性示例
+该示例展示了以下兼容性特性：
 
-This sample is showing following compatibility:
-
-* A `Filter` written with Dubbo 2.6.x will be properly loaded with Dubbo 2.7.x
-* A consumer with 2.6.x invokes a provider with 2.7.x (need to start 2.6.x consumer by yourself)
-* A consumer with 2.7.x invokes a provider with 2.6.x (need to start 2.6.x provider by yourself)
+使用 Dubbo 2.6.x 编写的 Filter 可以在 Dubbo 2.7.x 中正确加载
+使用 2.6.x 版本的消费者可以调用 2.7.x 版本的提供者（需要自行启动 2.6.x 消费者）
+使用 2.7.x 版本的消费者可以调用 2.6.x 版本的提供者（需要自行启动 2.6.x 提供者）

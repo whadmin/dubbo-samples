@@ -18,18 +18,19 @@
 package org.apache.dubbo.samples.context;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.util.concurrent.CountDownLatch;
 
 public class ContextProvider {
-
     public static void main(String[] args) throws Exception {
+        // 启动嵌入式Zookeeper作为注册中心
         new EmbeddedZooKeeper(2181, false).start();
 
+        // 加载Spring配置，启动Dubbo服务
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/dubbo-context-provider.xml");
         context.start();
 
         System.out.println("dubbo service started");
+        // 使用CountDownLatch让进程保持运行
         new CountDownLatch(1).await();
     }
 }
